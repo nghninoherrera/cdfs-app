@@ -6,8 +6,8 @@ from fuzzywuzzy import fuzz
 import re
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": ["https://cdsf-frontend.onrender.com"]}})
-
+CORS(app, resources={r"/*": {"origins": ["https://cdfs-frontend.onrender.com"]}})
+ 
 # Load the trained model
 model_path = 'Newly_created_cdsf_Ai_model.pkl'
 if not os.path.exists(model_path):
