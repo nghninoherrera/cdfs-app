@@ -47,33 +47,39 @@
 
       // Handle sentence input and detect matches
       React.useEffect(() => {
-        if (sentence.trim()) {
-          setLoading(true);
-          setError('');
-          setMatches([]);
-          setSelectedWord(null);
-          setResult(null);
+  if (!sentence.trim()) {
+    setMatches([]);
+    setSelectedWord(null);
+    setResult(null);
+    return;
+  }
 
-          fetch('https://cdfs-backend.onrender.com/detect', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ sentence })
-          })
-            .then(response => response.json())
-            .then(data => {
-              setMatches(data.matches);
-              setLoading(false);
-            })
-            .catch(err => {
-              setError('Error processing sentence. Please ensure the Flask server is running.');
-              setLoading(false);
-            });
-        } else {
-          setMatches([]);
-          setSelectedWord(null);
-          setResult(null);
-        }
-      }, [sentence]);
+  const timeout = setTimeout(() => {
+    setLoading(true);
+    setError('');
+    setMatches([]);
+    setSelectedWord(null);
+    setResult(null);
+
+    fetch('https://cdfs-backend.onrender.com/detect', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sentence })
+    })
+      .then(response => response.json())
+      .then(data => {
+        setMatches(data.matches);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError('Error processing sentence. Please ensure the Flask server is running.');
+        setLoading(false);
+      });
+  }, 500); // Wait 500ms after user stops typing
+
+  return () => clearTimeout(timeout);
+}, [sentence]);
+
 
       // Handle clicking a hyperlinked word
       const handleWordClick = (matchedWord, data) => {
