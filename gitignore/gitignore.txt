@@ -1,0 +1,22 @@
+# Node.js
+client/node_modules/
+client/build/
+client/.cache/
+
+# Python
+server/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+
+# IDE/Editor
+.vscode/
+.idea/
+*.swp
+
+# Miscellaneous
+*.log
+*.DS_Store
